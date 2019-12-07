@@ -13,7 +13,9 @@
     "url": "https://github.com/hmmhmmhm/svelte-reusable/issues"
   },
   "homepage": "https://github.com/hmmhmmhm/svelte-reusable#readme",
-  "dependencies": {},
+  "dependencies": {
+    "svelte": "^3.16.0"
+  },
   "devDependencies": {
     "@types/node": "^12.12.14"
   }
