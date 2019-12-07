@@ -14,7 +14,11 @@
   },
   "homepage": "https://github.com/hmmhmmhm/svelte-reusable#readme",
   "dependencies": {
-    "svelte": "^3.16.0"
+    "axios": "^0.19.0",
+    "cookie-storage": "^5.0.3",
+    "querystring": "^0.2.0",
+    "svelte": "^3.16.0",
+    "svelte-spa-router": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.14"
