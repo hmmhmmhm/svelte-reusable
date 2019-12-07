@@ -1,0 +1,20 @@
+{
+  "name": "svelte-reusable",
+  "version": "0.9.9",
+  "description": "♻️ Modules, logic, and components for reusable Svelte-SPA",
+  "main": "./src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmmhmmhm/svelte-reusable.git"
+  },
+  "author": "hmmhmmhm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hmmhmmhm/svelte-reusable/issues"
+  },
+  "homepage": "https://github.com/hmmhmmhm/svelte-reusable#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.12.14"
+  }
+}
