@@ -18,6 +18,7 @@ export interface IRequestParam {
     process: ProcessType,
     option?: IRequestOption,
     processInfo: string,
+    header?: any,
 }
 
 /**
@@ -102,6 +103,7 @@ export class RestAPI {
                 noAuthorization: false,
             },
             processInfo = '',
+            header,
 
         } = params
 
@@ -115,7 +117,7 @@ export class RestAPI {
 
             if(typeof this.postprocess == 'function'
                 && !this.postprocess(params, response)) return undefined
-    
+
             return response
         }catch(e){
             if(typeof this.faultTolerance == 'function')
@@ -129,11 +131,13 @@ export class RestAPI {
         process,
         option,
         processInfo,
+        header,
     }:{
         link: string,
         process: ProcessType, 
         option?: IRequestOption,
         processInfo?: string,
+        header?: any,
     }){
     
         return await this.request({
@@ -141,6 +145,7 @@ export class RestAPI {
             process,
             option,
             processInfo: (processInfo) ? processInfo : '',
+            header,
         })
     }
 
@@ -150,13 +155,15 @@ export class RestAPI {
         option,
         data,
         processInfo,
+        header,
     }:{
         link: string,
         process: ((link, header) => Promise<AxiosResponse<any>>)
             & ((link, data, header) => Promise<AxiosResponse<any>>),
         option?: IRequestOption,
-        data?: any
-        processInfo: string
+        data?: any,
+        processInfo: string,
+        header?: any,
     }){
 
         return await this.safety({
@@ -173,15 +180,18 @@ export class RestAPI {
             },
             option,
             processInfo,
+            header,
         })
     }
 
     async get ({
         link,
         option,
+        header,
     }:{
         link: string,
         option?: IRequestOption,
+        header?: any,
     }){
 
         return this.safteRequest({
@@ -189,6 +199,7 @@ export class RestAPI {
             option,
             process: axios.get,
             processInfo: `GET ${option? JSON.stringify(option): ''}`,
+            header,
         })
     }
 
@@ -196,10 +207,12 @@ export class RestAPI {
         link,
         data,
         option,
+        header,
     }:{
         link: string,
         data: any,
         option?: IRequestOption,
+        header?: any,
     }){
 
         return this.safteRequest({
@@ -208,15 +221,18 @@ export class RestAPI {
             process: axios.put,
             data,
             processInfo: `PUT ${option? JSON.stringify(option): ''}`,
+            header,
         })
     }
 
     async delete ({
         link,
         option,
+        header,
     }:{
         link: string,
         option?: IRequestOption,
+        header?: any,
     }){
 
         return this.safteRequest({
@@ -224,6 +240,7 @@ export class RestAPI {
             option,
             process: axios.delete,
             processInfo: `DELETE ${option? JSON.stringify(option): ''}`,
+            header,
         })
     }
 
@@ -231,10 +248,12 @@ export class RestAPI {
         link, 
         data, 
         option,
+        header,
     }: {
         link: string,
         data: any,
         option?: IRequestOption,
+        header?: any,
     }){
 
         return this.safteRequest({
@@ -243,6 +262,7 @@ export class RestAPI {
             process: axios.post,
             data,
             processInfo: `POST ${option? JSON.stringify(option): ''}`,
+            header,
         })
     }
 
@@ -255,6 +275,7 @@ export class RestAPI {
                 noAuthorization: false,
             },
             processInfo = '',
+            header,
 
         } = params
 
@@ -271,7 +292,17 @@ export class RestAPI {
                     && typeof(token) == 'string'
                     && token.length > 0)
                 ? {}
-                : { headers: {"Authorization" : `Bearer ${token}`}})
+                : { headers: {"Authorization" : `Bearer ${token}`}}),
+
+        }
+        //...(header ? header : {}),
+        if(processHeader && header){
+            if(processHeader['headers']){
+                processHeader['headers'] = {
+                    ...processHeader['headers'],
+                    ...header,
+                }
+            }
         }
 
         let response =
