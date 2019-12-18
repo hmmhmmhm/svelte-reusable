@@ -19,6 +19,7 @@ export interface IRequestParam {
     option?: IRequestOption,
     processInfo: string,
     header?: any,
+    axiosOption?: any,
 }
 
 /**
@@ -104,6 +105,7 @@ export class RestAPI {
             },
             processInfo = '',
             header,
+            axiosOption,
 
         } = params
 
@@ -132,12 +134,14 @@ export class RestAPI {
         option,
         processInfo,
         header,
+        axiosOption,
     }:{
         link: string,
         process: ProcessType, 
         option?: IRequestOption,
         processInfo?: string,
         header?: any,
+        axiosOption?: any,
     }){
     
         return await this.request({
@@ -146,6 +150,7 @@ export class RestAPI {
             option,
             processInfo: (processInfo) ? processInfo : '',
             header,
+            axiosOption,
         })
     }
 
@@ -156,6 +161,7 @@ export class RestAPI {
         data,
         processInfo,
         header,
+        axiosOption,
     }:{
         link: string,
         process: ((link, header) => Promise<AxiosResponse<any>>)
@@ -164,6 +170,7 @@ export class RestAPI {
         data?: any,
         processInfo: string,
         header?: any,
+        axiosOption?: any,
     }){
 
         return await this.safety({
@@ -181,6 +188,7 @@ export class RestAPI {
             option,
             processInfo,
             header,
+            axiosOption,
         })
     }
 
@@ -188,10 +196,12 @@ export class RestAPI {
         link,
         option,
         header,
+        axiosOption,
     }:{
         link: string,
         option?: IRequestOption,
         header?: any,
+        axiosOption?: any,
     }){
 
         return this.safteRequest({
@@ -200,6 +210,7 @@ export class RestAPI {
             process: axios.get,
             processInfo: `GET ${option? JSON.stringify(option): ''}`,
             header,
+            axiosOption,
         })
     }
 
@@ -208,11 +219,13 @@ export class RestAPI {
         data,
         option,
         header,
+        axiosOption,
     }:{
         link: string,
         data: any,
         option?: IRequestOption,
         header?: any,
+        axiosOption?: any,
     }){
 
         return this.safteRequest({
@@ -222,6 +235,7 @@ export class RestAPI {
             data,
             processInfo: `PUT ${option? JSON.stringify(option): ''}`,
             header,
+            axiosOption,
         })
     }
 
@@ -229,10 +243,12 @@ export class RestAPI {
         link,
         option,
         header,
+        axiosOption,
     }:{
         link: string,
         option?: IRequestOption,
         header?: any,
+        axiosOption?: any,
     }){
 
         return this.safteRequest({
@@ -241,6 +257,7 @@ export class RestAPI {
             process: axios.delete,
             processInfo: `DELETE ${option? JSON.stringify(option): ''}`,
             header,
+            axiosOption,
         })
     }
 
@@ -249,11 +266,13 @@ export class RestAPI {
         data, 
         option,
         header,
+        axiosOption,
     }: {
         link: string,
         data: any,
         option?: IRequestOption,
         header?: any,
+        axiosOption?: any,
     }){
 
         return this.safteRequest({
@@ -276,6 +295,7 @@ export class RestAPI {
             },
             processInfo = '',
             header,
+            axiosOption,
 
         } = params
 
@@ -294,6 +314,7 @@ export class RestAPI {
                 ? {}
                 : { headers: {"Authorization" : `Bearer ${token}`}}),
 
+            ...(axiosOption ? axiosOption : {}),
         }
         //...(header ? header : {}),
         if(processHeader && header){
@@ -308,7 +329,7 @@ export class RestAPI {
         let response =
             await params.process(
                 processLink,
-                processHeader
+                processHeader,
             )
 
         return response
