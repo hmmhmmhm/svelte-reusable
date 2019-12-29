@@ -12,33 +12,33 @@
     export let input = undefined
     export let etc = {}
 
-    export let style = {}
-    export let theme = {}
+    export let style = {
+        default: {},
+    }
+    export let theme = {
+        default: {},
+    }
 
     const css = makeCSS({ style, theme, svelte })
 </script>
 
 <input
     this
-    value={value}
-    type={type}
+    {value}
+    {type}
     placeholder={placeHolder}
-    disabled={disabled}
-    class='{css}'
+    {disabled}
+    class={css.default}
     {...etc}
-
-    on:input={(event)=>{
-        if(type != 'file'){
-            value = type.match(/^(number|range)$/)
-                ? +event.target.value
-                : event.target.value
+    on:input={event => {
+        if (type != 'file') {
+            value = type.match(/^(number|range)$/) ? +event.target.value : event.target.value
         }
-        if(type == 'file') enter()
-        if(typeof input == 'function') input(event)
+        if (type == 'file') enter()
+        if (typeof input == 'function') input(event)
     }}
-    on:keydown={(event)=>{
-        if(typeof keyDown == 'function') keyDown(event)
-        if(typeof enter == 'function'
-            && event.keyCode == 13) enter(value)
+    on:keydown={event => {
+        if (typeof keyDown == 'function') keyDown(event)
+        if (typeof enter == 'function' && event.keyCode == 13) enter(value)
     }}
 />

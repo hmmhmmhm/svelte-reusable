@@ -14,12 +14,12 @@ export type ProcessType = (link, header) => Promise<AxiosResponse<any>>
  * interface for network request.
  */
 export interface IRequestParam {
-    link: string,
-    process: ProcessType,
-    option?: IRequestOption,
-    processInfo: string,
-    header?: any,
-    axiosOption?: any,
+    link: string
+    process: ProcessType
+    option?: IRequestOption
+    processInfo: string
+    header?: any
+    axiosOption?: any
 }
 
 /**
@@ -32,7 +32,7 @@ export interface IRequestOption {
      * Enabling this option prevents error fallback
      * from running in the event of a communication error.
      */
-    noPreprocess: boolean,
+    noPreprocess: boolean
 
     /**
      * @description
@@ -44,11 +44,15 @@ export interface IRequestOption {
 }
 
 export type PreprocessType = (params: IRequestParam) => boolean
-export type IGlobalProcess = (params: IRequestParam) => Promise<AxiosResponse<any>>
-export type PostprocessType = (params: IRequestParam, response: AxiosResponse<any>) => boolean
+export type IGlobalProcess = (
+    params: IRequestParam
+) => Promise<AxiosResponse<any>>
+export type PostprocessType = (
+    params: IRequestParam,
+    response: AxiosResponse<any>
+) => boolean
 
 export class RestAPI {
-
     /**
      * @description
      * It should contain the back-end server address.
@@ -62,16 +66,14 @@ export class RestAPI {
     faultTolerance?: (error: Error) => void
 
     constructor(params: {
-        address: string,
+        address: string
         isUseAuth: boolean
-        getToken: () => string,
+        getToken: () => string
         faultTolerance?: (error: Error) => void
-        globalProcess?: IGlobalProcess,
-        preprocess?: PreprocessType,
-        postprocess?: PostprocessType,
-        
-    }){
-
+        globalProcess?: IGlobalProcess
+        preprocess?: PreprocessType
+        postprocess?: PostprocessType
+    }) {
         let {
             address,
             isUseAuth,
@@ -80,22 +82,21 @@ export class RestAPI {
             globalProcess,
             preprocess,
             postprocess,
-
         } = params
         this.address = address
         this.isUseAuth = isUseAuth
         this.getToken = getToken
         this.faultTolerance = faultTolerance
-        if(globalProcess) this.globalProcess = globalProcess
+        if (globalProcess) this.globalProcess = globalProcess
         this.preprocess = preprocess
         this.postprocess = postprocess
         this.address = address
 
-        if(!this.postprocess) this.postprocess = this.defaultPostProcess
-        if(!this.globalProcess) this.globalProcess = this.defaultGlobalProcess
+        if (!this.postprocess) this.postprocess = this.defaultPostProcess
+        if (!this.globalProcess) this.globalProcess = this.defaultGlobalProcess
     }
 
-    async request (params: IRequestParam) {
+    async request(params: IRequestParam) {
         let {
             link,
             process,
@@ -106,49 +107,52 @@ export class RestAPI {
             processInfo = '',
             header,
             axiosOption,
-
         } = params
 
-        try{
-            if(!option.noPreprocess){
-                if(typeof this.preprocess == 'function'
-                    && !this.preprocess(params)) return undefined
+        try {
+            if (!option.noPreprocess) {
+                if (
+                    typeof this.preprocess == 'function' &&
+                    !this.preprocess(params)
+                )
+                    return undefined
             }
 
             let response = await this.globalProcess(params)
 
-            if(typeof this.postprocess == 'function'
-                && !this.postprocess(params, response)) return undefined
+            if (
+                typeof this.postprocess == 'function' &&
+                !this.postprocess(params, response)
+            )
+                return undefined
 
             return response
-        }catch(e){
-            if(typeof this.faultTolerance == 'function')
-                this.faultTolerance(e)
+        } catch (e) {
+            if (typeof this.faultTolerance == 'function') this.faultTolerance(e)
             return undefined
         }
     }
 
-    async safety ({
+    async safety({
         link,
         process,
         option,
         processInfo,
         header,
         axiosOption,
-    }:{
-        link: string,
-        process: ProcessType, 
-        option?: IRequestOption,
-        processInfo?: string,
-        header?: any,
-        axiosOption?: any,
-    }){
-    
+    }: {
+        link: string
+        process: ProcessType
+        option?: IRequestOption
+        processInfo?: string
+        header?: any
+        axiosOption?: any
+    }) {
         return await this.request({
             link,
             process,
             option,
-            processInfo: (processInfo) ? processInfo : '',
+            processInfo: processInfo ? processInfo : '',
             header,
             axiosOption,
         })
@@ -162,24 +166,23 @@ export class RestAPI {
         processInfo,
         header,
         axiosOption,
-    }:{
-        link: string,
-        process: ((link, header) => Promise<AxiosResponse<any>>)
-            & ((link, data, header) => Promise<AxiosResponse<any>>),
-        option?: IRequestOption,
-        data?: any,
-        processInfo: string,
-        header?: any,
-        axiosOption?: any,
-    }){
-
+    }: {
+        link: string
+        process: ((link, header) => Promise<AxiosResponse<any>>) &
+            ((link, data, header) => Promise<AxiosResponse<any>>)
+        option?: IRequestOption
+        data?: any
+        processInfo: string
+        header?: any
+        axiosOption?: any
+    }) {
         return await this.safety({
             link,
             process: async (link, header) => {
                 let response: AxiosResponse<any>
-                if(data){
+                if (data) {
                     response = await process(link, data, header)
-                }else{
+                } else {
                     response = await process(link, header)
                 }
 
@@ -192,100 +195,96 @@ export class RestAPI {
         })
     }
 
-    async get ({
+    async get({
         link,
         option,
         header,
         axiosOption,
-    }:{
-        link: string,
-        option?: IRequestOption,
-        header?: any,
-        axiosOption?: any,
-    }){
-
+    }: {
+        link: string
+        option?: IRequestOption
+        header?: any
+        axiosOption?: any
+    }) {
         return this.safteRequest({
             link,
             option,
             process: axios.get,
-            processInfo: `GET ${option? JSON.stringify(option): ''}`,
+            processInfo: `GET ${option ? JSON.stringify(option) : ''}`,
             header,
             axiosOption,
         })
     }
 
-    async put ({
+    async put({
         link,
         data,
         option,
         header,
         axiosOption,
-    }:{
-        link: string,
-        data: any,
-        option?: IRequestOption,
-        header?: any,
-        axiosOption?: any,
-    }){
-
+    }: {
+        link: string
+        data: any
+        option?: IRequestOption
+        header?: any
+        axiosOption?: any
+    }) {
         return this.safteRequest({
             link,
             option,
             process: axios.put,
             data,
-            processInfo: `PUT ${option? JSON.stringify(option): ''}`,
+            processInfo: `PUT ${option ? JSON.stringify(option) : ''}`,
             header,
             axiosOption,
         })
     }
 
-    async delete ({
+    async delete({
         link,
         option,
         header,
         axiosOption,
-    }:{
-        link: string,
-        option?: IRequestOption,
-        header?: any,
-        axiosOption?: any,
-    }){
-
+    }: {
+        link: string
+        option?: IRequestOption
+        header?: any
+        axiosOption?: any
+    }) {
         return this.safteRequest({
             link,
             option,
             process: axios.delete,
-            processInfo: `DELETE ${option? JSON.stringify(option): ''}`,
+            processInfo: `DELETE ${option ? JSON.stringify(option) : ''}`,
             header,
             axiosOption,
         })
     }
 
-    async post ({
-        link, 
-        data, 
+    async post({
+        link,
+        data,
         option,
         header,
         axiosOption,
     }: {
-        link: string,
-        data: any,
-        option?: IRequestOption,
-        header?: any,
-        axiosOption?: any,
-    }){
-
+        link: string
+        data: any
+        option?: IRequestOption
+        header?: any
+        axiosOption?: any
+    }) {
         return this.safteRequest({
             link,
             option,
             process: axios.post,
             data,
-            processInfo: `POST ${option? JSON.stringify(option): ''}`,
+            processInfo: `POST ${option ? JSON.stringify(option) : ''}`,
             header,
         })
     }
 
-    protected defaultGlobalProcess: IGlobalProcess = async (params) => {
+    protected defaultGlobalProcess: IGlobalProcess = async params => {
         let {
             link,
             process,
@@ -296,29 +295,27 @@ export class RestAPI {
             processInfo = '',
             header,
             axiosOption,
-
         } = params
 
         let token = this.getToken()
         let processLink = `${this.address}${link}`
 
-        let processHeader = {} 
-        
+        let processHeader = {}
+
         processHeader = {
             ...processHeader,
 
-            ...((
-                option.noAuthorization
-                    && typeof(token) == 'string'
-                    && token.length > 0)
+            ...(option.noAuthorization &&
+            typeof token == 'string' &&
+            token.length > 0
                 ? {}
-                : { headers: {"Authorization" : `Bearer ${token}`}}),
+                : { headers: { Authorization: `Bearer ${token}` } }),
 
             ...(axiosOption ? axiosOption : {}),
         }
         //...(header ? header : {}),
-        if(processHeader && header){
-            if(processHeader['headers']){
+        if (processHeader && header) {
+            if (processHeader['headers']) {
                 processHeader['headers'] = {
                     ...processHeader['headers'],
                     ...header,
@@ -326,38 +323,30 @@ export class RestAPI {
             }
         }
 
-        let response =
-            await params.process(
-                processLink,
-                processHeader,
-            )
+        let response = await params.process(processLink, processHeader)
 
         return response
     }
-    
-    protected defaultPostProcess: PostprocessType =
-        (
-            params, 
-            response
-    ) => {
 
-        console.log(`%c🚧  ${params.link} ${params.processInfo}`, 'color: #908CFF;', response)
+    protected defaultPostProcess: PostprocessType = (params, response) => {
+        console.log(
+            `%c🚧  ${params.link} ${params.processInfo}`,
+            'color: #908CFF;',
+            response
+        )
         return true
     }
 
-    protected defaultPreProcess: PreprocessType =
-        (
-            params
-    ) => {
-
-        if(params.option
-            && this.isUseAuth
-            && !params.option.noAuthorization
-            && typeof this.getToken == 'function'){
-
+    protected defaultPreProcess: PreprocessType = params => {
+        if (
+            params.option &&
+            this.isUseAuth &&
+            !params.option.noAuthorization &&
+            typeof this.getToken == 'function'
+        ) {
             let token = this.getToken()
-            let tokenIsValid = (typeof token == 'string' && token.length > 0)
-            if(!tokenIsValid) return false
+            let tokenIsValid = typeof token == 'string' && token.length > 0
+            if (!tokenIsValid) return false
         }
 
         return true

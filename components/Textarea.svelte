@@ -8,21 +8,24 @@
     export let disabled = undefined
     export let etc = {}
 
-    export let style = {}
-    export let theme = {}
+    export let style = {
+        default: {},
+    }
+    export let theme = {
+        default: {},
+    }
 
     const css = makeCSS({ style, theme, svelte })
 </script>
 
 <textarea
     this
-    value={value}
-    type={type}
+    {value}
+    {type}
     placeholder={placeHolder}
-    disabled={disabled}
-    class='{css}'
+    {disabled}
+    class={css.default}
     {...etc}
-
     on:input
     on:keydown
 />
