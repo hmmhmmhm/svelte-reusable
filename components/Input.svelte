@@ -1,5 +1,4 @@
 <script>
-    import * as svelte from 'svelte'
     import { makeCSS } from 'svelte-css-in-js'
 
     export let type = 'text'
@@ -10,6 +9,7 @@
     export let enter = undefined
     export let keyDown = undefined
     export let input = undefined
+    export let change = undefined
     export let etc = {}
 
     export let style = {
@@ -19,7 +19,7 @@
         default: {},
     }
 
-    const css = makeCSS({ style, theme, svelte })
+    const css = makeCSS({ style, theme })
 </script>
 
 <input
@@ -36,6 +36,17 @@
         }
         if (type == 'file') enter()
         if (typeof input == 'function') input(event)
+    }}
+    on:change={event => {
+        const { target } = event
+        try {
+            if (target.value.length > 0) {
+                enter(target.files)
+            } else {
+                target.reset()
+            }
+        } catch (e) {}
+        if (typeof change == 'function') change(event)
     }}
     on:keydown={event => {
         if (typeof keyDown == 'function') keyDown(event)

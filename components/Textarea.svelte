@@ -1,5 +1,4 @@
 <script>
-    import * as svelte from 'svelte'
     import { makeCSS } from 'svelte-css-in-js'
 
     export let type = 'text'
@@ -15,7 +14,7 @@
         default: {},
     }
 
-    const css = makeCSS({ style, theme, svelte })
+    const css = makeCSS({ style, theme })
 </script>
 
 <textarea

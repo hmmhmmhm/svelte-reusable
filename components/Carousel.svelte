@@ -14,7 +14,7 @@
         loop: false,
         nav: false,
         slideBy: 'page',
-        lazyload: true
+        lazyload: true,
     }
     let navs = []
 
@@ -44,7 +44,7 @@
             border: '0',
             '.tns-nav-active': {
                 background: navItemActiveColor,
-            }
+            },
         },
     }
     export let theme = {
@@ -53,26 +53,24 @@
         'tns-nav-item': {},
     }
 
-    import * as svelte from 'svelte'
-    const css = makeCSS({ style, theme, svelte })
-    console.log('css', css)
+    const css = makeCSS({ style, theme })
 
     onMount(async () => {
         try {
-            if(!slider){
-                if(navContainer && !options.navContainer) options.navContainer = navContainer
-                console.log('check', navContainer, options)
+            if (!slider) {
+                if (navContainer && !options.navContainer)
+                    options.navContainer = navContainer
                 slider = tns({
                     container,
                     ...options,
                 })
-            }else{
+            } else {
                 slider.refresh()
             }
         } catch (e) {}
         await tick()
-        if(slider){
-            for(let i=1; i <= slider.getInfo().slideCount; i++)
+        if (slider) {
+            for (let i = 1; i <= slider.getInfo().slideCount; i++)
                 navs.push(null)
             navs = navs
         }
@@ -90,18 +88,18 @@
     <slot />
 </div>
 
-<div class={css["tns-nav"]} bind:this={navContainer}>
+<div class={css['tns-nav']} bind:this={navContainer}>
     {#if options.nav}
         {#if navs.length > 0}
             {#each navs as nav, index}
                 {#if index == 0}
-                    <button class='{css['tns-nav-item']} tns-nav-active'></button>
+                    <button class="{css['tns-nav-item']} tns-nav-active" />
                 {:else}
-                    <button class={css['tns-nav-item']}></button>
+                    <button class={css['tns-nav-item']} />
                 {/if}
             {/each}
         {:else}
-            <button></button>
+            <button />
         {/if}
     {/if}
 </div>
