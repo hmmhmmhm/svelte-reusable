@@ -194,7 +194,7 @@ export const GridHelper = {
      * @example
      * {
      *       items: [],
-     *       cols: 1000,
+     *       cols: 100,
      *       gap: 10,
      *       rowHeight: 1,
      *       breakpoints: [],
@@ -206,7 +206,7 @@ export const GridHelper = {
     getDefaultOptions: () => {
         return {
             items: [],
-            cols: 1000,
+            cols: 100,
             gap: 10,
             rowHeight: 1,
             breakpoints: [],

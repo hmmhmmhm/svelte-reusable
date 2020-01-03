@@ -4,7 +4,7 @@
 
     export let options = {
         items: [],
-        cols: 1000,
+        cols: 100,
         gap: 10,
         rowHeight: 1,
         breakpoints: [],
