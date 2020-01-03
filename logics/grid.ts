@@ -95,11 +95,11 @@ interface IGridHelper {
     resizeItem: (item: IGridItem, cols: number, rows: number) => IGridItem[]
 }
 
-export interface IGridLayer {
-    component
-    w: number
-    h: number
-    option: IGridOption
+export interface IGridLayerOption {
+    component?
+    w?: number
+    h?: number
+    option?: IGridOption
     props?
     x?: number
     y?: number
@@ -180,10 +180,12 @@ export const GridHelper = {
         return option.items
     },
 
-    layout: (layers: IGridLayer[]) => {
-        for(let layer of layers){
+    layout: (layerOption: IGridLayerOption) => {
+        return (addOption: IGridLayerOption) => {
+            // @ts-ignore
             GridHelper.add({
-                ...layer
+                ...layerOption,
+                ...addOption,
             })
         }
     },
