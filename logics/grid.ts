@@ -95,6 +95,18 @@ interface IGridHelper {
     resizeItem: (item: IGridItem, cols: number, rows: number) => IGridItem[]
 }
 
+export interface IGridLayer {
+    component
+    w: number
+    h: number
+    option: IGridOption
+    props?
+    x?: number
+    y?: number
+    item?: IGridItem
+    background?: string
+}
+
 const gridHelper: IGridHelper = _gridHelper
 export const GridHelper = {
     ...gridHelper,
@@ -154,8 +166,6 @@ export const GridHelper = {
                 ...item,
                 w,
                 h,
-                x,
-                y,
                 props,
 
                 id: GridHelper.randomId(),
@@ -170,6 +180,27 @@ export const GridHelper = {
         return option.items
     },
 
+    layout: (layers: IGridLayer[]) => {
+        for(let layer of layers){
+            GridHelper.add({
+                ...layer
+            })
+        }
+    },
+
+    /**
+     * @example
+     * {
+     *       items: [],
+     *       cols: 1000,
+     *       gap: 10,
+     *       rowHeight: 1,
+     *       breakpoints: [],
+     *       dragDebounceMs: 350,
+     *       useTransform: false,
+     *       fillEmpty: true,
+     *   }
+     */
     getDefaultOptions: () => {
         return {
             items: [],
