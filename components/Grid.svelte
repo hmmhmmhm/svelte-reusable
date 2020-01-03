@@ -6,7 +6,10 @@
     export let cols = 5
     export let gap = 10
     export let rowHeight = 100
-    export let breakpoints = [[800, 3], [530, 1]]
+    export let breakpoints = [
+        [800, 3],
+        [530, 1],
+    ]
 
     export let dragDebounceMs = 350
     export let useTransform = false

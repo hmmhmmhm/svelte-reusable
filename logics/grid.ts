@@ -82,7 +82,11 @@ interface IGridHelper {
      * Automatically populates the components
      * in the layout with the remaining free space.
      */
-    addComponent: (item: IGridItem, items: IGridItem[], cols: number) => IGridItem[]
+    addComponent: (
+        item: IGridItem,
+        items: IGridItem[],
+        cols: number
+    ) => IGridItem[]
 }
 
 export const GridHelper: IGridHelper = {
@@ -92,7 +96,7 @@ export const GridHelper: IGridHelper = {
         items = [...items, ...[{ ...item, ...findOutPosition }]]
         touchScrollAllow()
         return items
-    }
+    },
 }
 
 import { tick } from 'svelte'
