@@ -36,6 +36,7 @@ export interface IGridItem {
     id?: string
     component?
     background?
+    props?
 }
 export interface IGridOption {
     items: IGridItem[]
@@ -106,15 +107,14 @@ export const GridHelper = {
         item: IGridItem,
         items: IGridItem[],
         cols: number,
-        autoPosition: boolean = true,
         x?: number,
         y?: number,
     ) => {
-        if(autoPosition){
+        if(x !== undefined && y !== undefined){
+            items = [...items, ...[{ ...item, ...{x, y} }]]
+        } else {
             let findOutPosition = GridHelper.findSpaceForItem(item, items, cols)
             items = [...items, ...[{ ...item, ...findOutPosition }]]
-        } else if(!autoPosition && x && y){
-            items = [...items, ...[{ ...item, ...{x, y} }]]
         }
         GridHelper.touchScrollAllow()
         return items
@@ -131,6 +131,7 @@ export const GridHelper = {
         w,
         h,
         option,
+        props = {},
 
         item = {},
         background,
@@ -140,28 +141,31 @@ export const GridHelper = {
         component
         w: number
         h: number
-
         option: IGridOption
+        props?
 
         item?: IGridItem
         background?: string
-        x?: number,
+        x?: number
         y?: number
     }) => {
         option.items = GridHelper.addComponentManually(
             GridHelper.item({
                 ...item,
-                x,
-                y,
                 w,
                 h,
+                x,
+                y,
+                props,
 
                 id: GridHelper.randomId(),
                 component,
                 background: background ? background : '#ffffff',
             }),
             option.items,
-            option.cols
+            option.cols,
+            x,
+            y,
         )
         return option.items
     },
@@ -169,13 +173,10 @@ export const GridHelper = {
     getDefaultOptions: () => {
         return {
             items: [],
-            cols: 5,
+            cols: 1000,
             gap: 10,
-            rowHeight: 100,
-            breakpoints: [
-                [800, 3],
-                [530, 1],
-            ],
+            rowHeight: 1,
+            breakpoints: [],
             dragDebounceMs: 350,
             useTransform: false,
             fillEmpty: true,

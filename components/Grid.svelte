@@ -4,10 +4,10 @@
 
     export let options = {
         items: [],
-        cols: 5,
+        cols: 1000,
         gap: 10,
-        rowHeight: 100,
-        breakpoints: [[800, 3], [530, 1]],
+        rowHeight: 1,
+        breakpoints: [],
         dragDebounceMs: 350,
         useTransform: false,
         fillEmpty: true,
@@ -65,7 +65,7 @@
                     <p>W: {item.w} H: {item.h} X: {item.x} Y: {item.y}</p>
                 </div>
             {:else if item && item.component}
-                <svelte:component this={item.component} />
+                <svelte:component this={item.component} {...item.props}/>
             {/if}
         </div>
     </Grid>
