@@ -1,5 +1,6 @@
 // @ts-ignore
 import _gridHelper from 'svelte-grid/build/helper/index'
+import { tick } from 'svelte'
 
 export interface IGridOptionDrag {
     top?: any
@@ -31,6 +32,10 @@ export interface IGridItem {
     max?: IGridOptionSize
     min?: IGridOptionSize
     static?: boolean
+
+    id?: string
+    component?
+    background?
 }
 
 export interface IGridPosition {
@@ -78,10 +83,6 @@ interface IGridHelper {
      */
     resizeItem: (item: IGridItem, cols: number, rows: number) => IGridItem[]
 
-    /**
-     * Automatically populates the components
-     * in the layout with the remaining free space.
-     */
     addComponent: (
         item: IGridItem,
         items: IGridItem[],
@@ -89,21 +90,85 @@ interface IGridHelper {
     ) => IGridItem[]
 }
 
-export const GridHelper: IGridHelper = {
-    ..._gridHelper,
-    addComponent: (item: IGridItem, items: IGridItem[], cols: number) => {
+const gridHelper: IGridHelper = _gridHelper
+export const GridHelper = {
+    ...gridHelper,
+
+    /**
+     * Automatically populates the components
+     * in the layout with the remaining free space.
+     */
+    addComponentManually: (
+        item: IGridItem,
+        items: IGridItem[],
+        cols: number
+    ) => {
         let findOutPosition = GridHelper.findSpaceForItem(item, items, cols)
         items = [...items, ...[{ ...item, ...findOutPosition }]]
-        touchScrollAllow()
+        GridHelper.touchScrollAllow()
         return items
     },
-}
 
-import { tick } from 'svelte'
-const touchScrollAllow = async () => {
-    await tick()
-    for (let elm of document.querySelectorAll('.svlt-grid-item')) {
-        // @ts-ignore
-        elm.style.touchAction = 'auto'
-    }
+    randomId: () =>
+        '_' +
+        Math.random()
+            .toString(36)
+            .substr(2, 9),
+
+    add: ({
+        component,
+        w,
+        h,
+        background,
+        option = {},
+        items,
+        cols,
+    }: {
+        component
+        w: number
+        h: number
+        option: IGridItem
+        items: IGridItem[]
+        cols: number
+
+        background?: string
+    }) => {
+        return GridHelper.addComponentManually(
+            GridHelper.item({
+                ...option,
+                w,
+                h,
+
+                id: GridHelper.randomId(),
+                component,
+                background: background ? background : '#ffffff',
+            }),
+            items,
+            cols
+        )
+    },
+
+    getDefaultOptions: () => {
+        return {
+            items: [],
+            cols: 5,
+            gap: 10,
+            rowHeight: 100,
+            breakpoints: [
+                [800, 3],
+                [530, 1],
+            ],
+            dragDebounceMs: 350,
+            useTransform: false,
+            fillEmpty: true,
+        }
+    },
+
+    touchScrollAllow: async () => {
+        await tick()
+        for (let elm of document.querySelectorAll('.svlt-grid-item')) {
+            // @ts-ignore
+            elm.style.touchAction = 'auto'
+        }
+    },
 }
