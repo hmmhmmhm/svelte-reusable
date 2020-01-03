@@ -2,9 +2,6 @@
     // @ts-ignore
     import Grid from 'svelte-grid/src/index.svelte'
 
-    export let usePad = true
-    export let useBr = true
-
     export let options = {
         items: [],
         cols: 5,
@@ -16,17 +13,19 @@
         fillEmpty: true,
     }
 
+    export let borderRadius = '10px'
+    export let boxShadow = '0 2px 8px 3px rgba(69, 91, 99, 0.1)'
+    export let test = false
     export let style = {
         default: {
             position: 'relative',
             width: '100%',
-            marginTop: '10px',
         },
         gridContent: {
             width: '100%',
             height: '100%',
             color: 'black',
-            display: 'flex',
+            display: 'block',
             justifyContent: 'center',
             alignItems: 'center',
             fontSize: 'large',
@@ -34,75 +33,53 @@
         gridComponent: {
             position: 'absolute',
             backgroundColor: '#ffffff',
-            borderRadius: '20px',
             zIndex: '2',
-            height: '97%',
-            top: '5px',
-            boxShadow: '0 2px 8px 3px rgba(69, 91, 99, 0.1)',
-            overflow: 'hidden',
-        },
-        gridComponentPad: {
-            position: 'absolute',
-            backgroundColor: '#ffffff',
-            zIndex: '1',
             height: '100%',
-            top: '5px',
             overflow: 'hidden',
-        },
-        gridComponentBr: {
-            position: 'absolute',
-            backgroundColor: '#526eb4',
-            borderRadius: '23px',
-            width: '100%',
-            overflow: 'hidden',
-        },
-        gridComponentInner: {
-            position: 'relative',
-            width: '90%',
-            height: '90%',
+            boxShadow,
+            borderRadius,
         },
     }
     export let theme = {
         default: {},
         gridContent: {},
         gridComponent: {},
-        gridComponentPad: {},
-        gridComponentBr: {},
-        gridComponentInner: {},
     }
 
     import { makeCSS } from 'svelte-css-in-js'
     const css = makeCSS({ style, theme })
 </script>
 
+<svelte:head>
+    <style>
+        .svlt-grid-resizer {
+            z-index: 2;
+        }
+    </style>
+</svelte:head>
 <div class={css.default}>
-    <Grid
-        bind:items={options.items}
-        {...options}
-        on:resize
-        on:mount
-        on:adjust
-        let:item
-    >
+    <Grid {...options} on:resize on:mount on:adjust let:item>
         <div class="{css.gridContent} {css.gridComponent}">
-
-            <div class={css.gridComponentInner}>
-                {#if item && item.component}
-                    <svelte:component this={item.component} />
-                {/if}
-            </div>
-
-            {#if usePad}
-                <div
-                    class="{css.gridContent}
-                    {css.gridComponentPad}"
-                    style="background-color: {item.background}; {item.background == '#fff' ? 'top: 5px;' : 'top: 25px;'}"
-                />
-            {/if}
-
-            {#if useBr}
-                <div class="{css.gridContent} {css.gridComponentBr}" />
+            {#if test}
+                <div class="testPlate">
+                    <p>W: {item.w} H: {item.h} X: {item.x} Y: {item.y}</p>
+                </div>
+            {:else if item && item.component}
+                <svelte:component this={item.component} />
             {/if}
         </div>
     </Grid>
 </div>
+
+<style>
+    .testPlate {
+        text-align: center;
+        width: 100%;
+        height: 100%;
+    }
+    .testPlate > p {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+</style>

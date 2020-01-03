@@ -10,6 +10,6 @@ import Carousel from './Carousel.svelte'
 // @ts-ignore
 import VirtualList from '@sveltejs/svelte-virtual-list'
 // @ts-ignore
-import Grid from 'svelte-grid/src/index.svelte'
+import Grid from './Grid.svelte'
 
 export { Button, Input, Textarea, Carousel, VirtualList, Grid }

@@ -1,6 +1,6 @@
 {
   "name": "svelte-reusable",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "♻️ Modules, logic, and components for reusable Svelte-SPA",
   "main": "./src/index.ts",
   "scripts": {

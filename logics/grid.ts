@@ -105,10 +105,17 @@ export const GridHelper = {
     addComponentManually: (
         item: IGridItem,
         items: IGridItem[],
-        cols: number
+        cols: number,
+        autoPosition: boolean = true,
+        x?: number,
+        y?: number,
     ) => {
-        let findOutPosition = GridHelper.findSpaceForItem(item, items, cols)
-        items = [...items, ...[{ ...item, ...findOutPosition }]]
+        if(autoPosition){
+            let findOutPosition = GridHelper.findSpaceForItem(item, items, cols)
+            items = [...items, ...[{ ...item, ...findOutPosition }]]
+        } else if(!autoPosition && x && y){
+            items = [...items, ...[{ ...item, ...{x, y} }]]
+        }
         GridHelper.touchScrollAllow()
         return items
     },
@@ -125,20 +132,27 @@ export const GridHelper = {
         h,
         option,
 
-        background,
         item = {},
+        background,
+        x = undefined,
+        y = undefined,
     }: {
         component
         w: number
         h: number
+
         option: IGridOption
 
         item?: IGridItem
         background?: string
+        x?: number,
+        y?: number
     }) => {
-        return GridHelper.addComponentManually(
+        option.items = GridHelper.addComponentManually(
             GridHelper.item({
                 ...item,
+                x,
+                y,
                 w,
                 h,
 
@@ -149,6 +163,7 @@ export const GridHelper = {
             option.items,
             option.cols
         )
+        return option.items
     },
 
     getDefaultOptions: () => {
