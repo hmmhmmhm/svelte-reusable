@@ -37,6 +37,16 @@ export interface IGridItem {
     component?
     background?
 }
+export interface IGridOption {
+    items: IGridItem[]
+    cols: number
+    gap: number
+    rowHeight: number
+    breakpoints: any
+    dragDebounceMs: number
+    useTransform: boolean
+    fillEmpty: boolean
+}
 
 export interface IGridPosition {
     x: number
@@ -82,12 +92,6 @@ interface IGridHelper {
      * It will find a new location and resize the widget based on the column size
      */
     resizeItem: (item: IGridItem, cols: number, rows: number) => IGridItem[]
-
-    addComponent: (
-        item: IGridItem,
-        items: IGridItem[],
-        cols: number
-    ) => IGridItem[]
 }
 
 const gridHelper: IGridHelper = _gridHelper
@@ -119,23 +123,22 @@ export const GridHelper = {
         component,
         w,
         h,
+        option,
+
         background,
-        option = {},
-        items,
-        cols,
+        item = {},
     }: {
         component
         w: number
         h: number
-        option: IGridItem
-        items: IGridItem[]
-        cols: number
+        option: IGridOption
 
+        item?: IGridItem
         background?: string
     }) => {
         return GridHelper.addComponentManually(
             GridHelper.item({
-                ...option,
+                ...item,
                 w,
                 h,
 
@@ -143,8 +146,8 @@ export const GridHelper = {
                 component,
                 background: background ? background : '#ffffff',
             }),
-            items,
-            cols
+            option.items,
+            option.cols
         )
     },
 
