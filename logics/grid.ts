@@ -218,6 +218,7 @@ export const GridHelper = {
 
     touchScrollAllow: async () => {
         await tick()
+        // @ts-ignore
         for (let elm of document.querySelectorAll('.svlt-grid-item')) {
             // @ts-ignore
             elm.style.touchAction = 'auto'
