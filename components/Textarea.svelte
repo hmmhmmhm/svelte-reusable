@@ -1,7 +1,6 @@
 <script>
     import { makeCSS } from 'svelte-css-in-js'
 
-    export let type = 'text'
     export let value = ''
     export let placeHolder = ''
     export let disabled = undefined
@@ -19,8 +18,7 @@
 
 <textarea
     this
-    {value}
-    {type}
+    bind:value
     placeholder={placeHolder}
     {disabled}
     class={css.default}
