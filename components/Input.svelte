@@ -39,13 +39,15 @@
     }}
     on:change={event => {
         const { target } = event
-        try {
-            if (target.value.length > 0) {
-                enter(target.files)
-            } else {
-                target.reset()
-            }
-        } catch (e) {}
+        if (type == 'file') {
+            try {
+                if (target.value.length > 0) {
+                    enter(target.files)
+                } else {
+                    target.reset()
+                }
+            } catch (e) {}
+        }
         if (typeof change == 'function') change(event)
     }}
     on:keydown={event => {
