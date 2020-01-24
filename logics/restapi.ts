@@ -305,9 +305,7 @@ export class RestAPI {
         processHeader = {
             ...processHeader,
 
-            ...(option.noAuthorization ||
-            typeof token == 'string' &&
-            token.length == 0
+            ...(option.noAuthorization
                 ? {}
                 : { headers: { Authorization: `Bearer ${token}` } }),
 
