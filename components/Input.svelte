@@ -13,10 +13,10 @@
     export let etc = {}
 
     export let style = {
-        default: {},
+        input: {},
     }
     export let theme = {
-        default: {},
+        input: {},
     }
 
     const css = makeCSS({ style, theme })
@@ -28,7 +28,7 @@
     {type}
     placeholder={placeHolder}
     {disabled}
-    class={css.default}
+    class="input {css.input}"
     {...etc}
     on:input={event => {
         if (type != 'file') {

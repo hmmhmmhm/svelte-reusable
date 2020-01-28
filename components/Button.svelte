@@ -7,7 +7,7 @@
     export let etc = {}
 
     export let style = {
-        default: {
+        button: {
             width: '100%',
             borderStyle: 'none',
             fontWeight: '800',
@@ -25,7 +25,7 @@
         },
     }
     export let theme = {
-        default: {},
+        button: {},
         label: {},
     }
 
@@ -33,6 +33,6 @@
     const css = makeCSS({ style, theme })
 </script>
 
-<button class={css.default} on:click {type} {disabled} {value} {name} {...etc}>
-    <p class={css.label}>{label}</p>
+<button class="button {css.button}" on:click {type} {disabled} {value} {name} {...etc}>
+    <p class="label {css.label}">{label}</p>
 </button>

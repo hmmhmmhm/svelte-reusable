@@ -7,10 +7,10 @@
     export let etc = {}
 
     export let style = {
-        default: {},
+        textarea: {},
     }
     export let theme = {
-        default: {},
+        textarea: {},
     }
 
     const css = makeCSS({ style, theme })
@@ -21,7 +21,7 @@
     bind:value
     placeholder={placeHolder}
     {disabled}
-    class={css.default}
+    class="textarea {css.textarea}"
     {...etc}
     on:input
     on:keydown
