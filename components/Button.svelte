@@ -5,6 +5,7 @@
     export let name = ''
     export let disabled = undefined
     export let etc = {}
+    export let element = undefined
 
     export let style = {
         button: {
@@ -33,6 +34,6 @@
     const css = makeCSS({ style, theme })
 </script>
 
-<button class="button {css.button}" on:click {type} {disabled} {value} {name} {...etc}>
+<button bind:this={element} class="button {css.button}" on:click {type} {disabled} {value} {name} {...etc}>
     <p class="label {css.label}">{label}</p>
 </button>

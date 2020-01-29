@@ -11,6 +11,7 @@
     export let input = undefined
     export let change = undefined
     export let etc = {}
+    export let element = undefined
 
     export let style = {
         input: {},
@@ -23,7 +24,7 @@
 </script>
 
 <input
-    this
+    bind:this={element}
     {value}
     {type}
     placeholder={placeHolder}

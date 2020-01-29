@@ -5,6 +5,7 @@
     export let placeHolder = ''
     export let disabled = undefined
     export let etc = {}
+    export let element = undefined
 
     export let style = {
         textarea: {},
@@ -17,7 +18,7 @@
 </script>
 
 <textarea
-    this
+    bind:this={element}
     bind:value
     placeholder={placeHolder}
     {disabled}
