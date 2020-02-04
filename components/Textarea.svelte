@@ -6,6 +6,7 @@
     export let disabled = undefined
     export let etc = {}
     export let element = undefined
+    export let pattern = undefined
 
     export let style = {
         textarea: {},
@@ -25,5 +26,7 @@
     class="textarea {css.textarea}"
     {...etc}
     on:input
+    {pattern}
+    on:keyup
     on:keydown
 />

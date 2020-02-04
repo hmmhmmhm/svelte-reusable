@@ -12,6 +12,7 @@
     export let change = undefined
     export let etc = {}
     export let element = undefined
+    export let pattern = undefined
 
     export let style = {
         input: {},
@@ -51,6 +52,8 @@
         }
         if (typeof change == 'function') change(event)
     }}
+    {pattern}
+    on:keyup
     on:keydown={event => {
         if (typeof keyDown == 'function') keyDown(event)
         if (typeof enter == 'function' && event.keyCode == 13) enter(value)
