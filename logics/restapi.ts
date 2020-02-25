@@ -302,14 +302,16 @@ export class RestAPI {
 
         let processHeader = {}
 
-        processHeader = {
-            ...processHeader,
+        if(token != undefined && token != null){
+            processHeader = {
+                ...processHeader,
 
-            ...(option.noAuthorization
-                ? {}
-                : { headers: { Authorization: `Bearer ${token}` } }),
+                ...(option.noAuthorization
+                    ? {}
+                    : { headers: { Authorization: `Bearer ${token}` } }),
 
-            ...(axiosOption ? axiosOption : {}),
+                ...(axiosOption ? axiosOption : {}),
+            }
         }
         //...(header ? header : {}),
         if (processHeader && header) {
