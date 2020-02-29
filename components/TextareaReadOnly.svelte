@@ -12,9 +12,15 @@
 
     export let style = {
         textarea: {
+            display: 'block',
             width: '100%',
+            minHeight: '100%',
             background: 'unset',
             borderStyle: 'none',
+            resize: 'none',
+            padding: '0',
+            margin: '0',
+            fontSize: '15px',
         },
     }
     export let theme = {
@@ -23,10 +29,14 @@
 
     const css = makeCSS({ style, theme })
 
-    const recalculateHeight = (value)=> {
-        if(element && element.style) {
+    const recalculateHeight = value => {
+        if (element && element.style) {
+            // Adjust the height according to the font size.
+            let fontSize = Number(style.textarea.fontSize.replace('px', ''))
+            let diff = fontSize / 17
+
             element.style.height = '1px'
-            element.style.height = (12 + element.scrollHeight) + 'px'
+            element.style.height = element.scrollHeight * diff + 'px'
         }
     }
 
@@ -39,7 +49,7 @@
 
 <textarea
     bind:this={element}
-    bind:value
+    value={`${value}${value}${value}${value}${value}`}
     placeholder={placeHolder}
     {disabled}
     class="textarea {css.textarea}"
