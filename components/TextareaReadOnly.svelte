@@ -49,7 +49,7 @@
 
 <textarea
     bind:this={element}
-    value={`${value}${value}${value}${value}${value}`}
+    value={`${value}`}
     placeholder={placeHolder}
     {disabled}
     class="textarea {css.textarea}"
