@@ -5,8 +5,6 @@ import Input from './Input.svelte'
 // @ts-ignore
 import Textarea from './Textarea.svelte'
 // @ts-ignore
-import TextareaReadOnly from './TextareaReadOnly.svelte'
-// @ts-ignore
 import Carousel from './Carousel.svelte'
 
 // @ts-ignore
@@ -18,7 +16,6 @@ export {
     Button,
     Input,
     Textarea,
-    TextareaReadOnly,
     Carousel,
     VirtualList,
     Grid,
