@@ -34,8 +34,8 @@ export const Router = {
     getLocation: () => get(spaRouter.location),
     getQueryString: () => get(spaRouter.querystring),
     once: SPA.once,
-    setInterval: SPA._setInterval,
-    setTimeout: SPA._setTimeout,
+    setInterval: SPA.setInterval,
+    setTimeout: SPA.setTimeout,
 
     referrer,
     getReferrer: () => get(referrer),

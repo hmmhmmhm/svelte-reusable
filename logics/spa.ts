@@ -8,7 +8,13 @@ location.subscribe(currentLocation => {
         if (onceListKey != currentLocation) delete onceList[onceListKey]
 })
 
-export const once = (callback: () => void, identifier?: string) => {
+/**
+ * @description
+ * This function allows the desired function
+ * to operate only once within the page.
+ * (This feature is applicable until a page move occurs.)
+ */
+export const once = (callback: () => void, identifier: string) => {
     let registeredLocation = get(location)
 
     if (
@@ -22,7 +28,13 @@ export const once = (callback: () => void, identifier?: string) => {
     }
 }
 
-export const _setInterval = (handler, timeout: number) => {
+/**
+ * @description
+ * This function will run the function repeatedly
+ * only when no other page has been moved
+ * from the first scheduled page.
+ */
+export const setInterval = (handler, timeout: number) => {
     let registeredLocation = get(location)
     let intervalHandler = setInterval(() => {
         if (get(location) != registeredLocation) {
@@ -34,7 +46,12 @@ export const _setInterval = (handler, timeout: number) => {
     return intervalHandler
 }
 
-export const _setTimeout = (handler, timeout: number) => {
+/**
+ * @description
+ * This function runs a callback only if no other
+ * page has been moved from the first scheduled page.
+ */
+export const setTimeout = (handler, timeout: number) => {
     let registeredLocation = get(location)
     let timeoutHandler = setTimeout(() => {
         if (get(location) != registeredLocation) {

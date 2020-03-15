@@ -1,6 +1,6 @@
 {
   "name": "svelte-reusable",
-  "version": "2.0.7",
+  "version": "3.0.0",
   "description": "♻️ Modules, logic, and components for reusable Svelte-SPA",
   "main": "./src/index.ts",
   "scripts": {
@@ -17,19 +17,18 @@
   },
   "homepage": "https://github.com/hmmhmmhm/svelte-reusable#readme",
   "dependencies": {
-    "@sveltejs/svelte-virtual-list": "^3.0.1",
-    "axios": "^0.19.2",
-    "cookie-storage": "^6.0.0",
-    "querystring": "^0.2.0",
+    "@sveltejs/svelte-virtual-list": "*",
+    "axios": "*",
+    "cookie-storage": "*",
+    "querystring": "*",
     "svelte": "*",
-    "svelte-css-in-js": "^1.0.3",
-    "svelte-grid": "^1.10.6",
-    "svelte-spa-router": "^2.0.0",
-    "tiny-slider": "^2.9.2"
+    "svelte-css-in-js": "*",
+    "svelte-grid": "*",
+    "svelte-spa-router": "*"
   },
   "devDependencies": {
-    "@types/node": "^13.7.7",
-    "prettier": "^1.19.1",
-    "prettier-plugin-svelte": "^0.7.0"
+    "@types/node": "*",
+    "prettier": "*",
+    "prettier-plugin-svelte": "*"
   }
 }

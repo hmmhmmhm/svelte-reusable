@@ -1,6 +1,12 @@
 import { CookieStorage } from 'cookie-storage'
 
-export const cookieStorage = new CookieStorage()
+const cookieStorage = new CookieStorage()
+
+export const clear = cookieStorage.clear
+export const getItem = cookieStorage.getItem
+export const key = cookieStorage.key
+export const removeItem = cookieStorage.removeItem
+export const setItem = cookieStorage.setItem
 export const getCacheItem = tag => {
     let data = cookieStorage.getItem(tag)
 
