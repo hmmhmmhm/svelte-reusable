@@ -11,6 +11,7 @@ import { Regex } from './regex'
 import { RestAPI } from './restapi'
 import { Router } from './router'
 import { GridHelper } from './grid'
+import * as Page from './page'
 
 export {
     Svelte,
@@ -25,4 +26,5 @@ export {
     RestAPI,
     Router,
     GridHelper,
+    Page,
 }

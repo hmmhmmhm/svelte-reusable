@@ -1,6 +1,6 @@
 {
   "name": "svelte-reusable",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "♻️ Modules, logic, and components for reusable Svelte-SPA",
   "main": "./src/index.ts",
   "scripts": {
@@ -21,6 +21,7 @@
     "axios": "*",
     "cookie-storage": "*",
     "querystring": "*",
+    "svelma": "*",
     "svelte": "*",
     "svelte-css-in-js": "*",
     "svelte-grid": "*",
