@@ -1,3 +1,7 @@
+import * as Svelte from 'svelte'
+import * as Store from 'svelte/store'
+import * as Transition from 'svelte/transition'
+
 import * as Account from './account'
 import * as SPA from './spa'
 import * as Cookie from './cookie'
@@ -8,4 +12,17 @@ import { RestAPI } from './restapi'
 import { Router } from './router'
 import { GridHelper } from './grid'
 
-export { Account, SPA, Cookie, Querystring, Regex, RestAPI, Router, GridHelper }
+export {
+    Svelte,
+    Store,
+    Transition,
+
+    Account,
+    SPA,
+    Cookie,
+    Querystring,
+    Regex,
+    RestAPI,
+    Router,
+    GridHelper,
+}
