@@ -4,8 +4,6 @@ import Button from './Button.svelte'
 import Input from './Input.svelte'
 // @ts-ignore
 import Textarea from './Textarea.svelte'
-// @ts-ignore
-import Carousel from './Carousel.svelte'
 
 // @ts-ignore
 import VirtualList from '@sveltejs/svelte-virtual-list'
@@ -16,7 +14,6 @@ export {
     Button,
     Input,
     Textarea,
-    Carousel,
     VirtualList,
     Grid,
 }
