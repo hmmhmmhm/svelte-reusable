@@ -7,11 +7,15 @@ let defaultData = null
 try {
     let load
     if ((load = window.localStorage.getItem('account.hasLogin')) != null)
-        defaultHasLogin = load
+        defaultHasLogin = load == 'true'
     if ((load = window.localStorage.getItem('account.token')) != null)
         defaultToken = load
-    if ((load = window.localStorage.getItem('account.data')) != null)
+    if ((load = window.localStorage.getItem('account.data')) != null) {
         defaultData = load
+        try {
+            if (defaultData) defaultData = JSON.parse(defaultData)
+        } catch (e) {}
+    }
 } catch (e) {
     console.log(e)
 }
