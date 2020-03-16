@@ -26,6 +26,8 @@ hasLogin.subscribe(value => {
     window.localStorage.setItem('account.hasLogin', String(value))
 })
 
+export const getHasLogin = (): boolean => get(hasLogin)
+
 /**
  * @description
  * The user's authentication tokens are
@@ -39,7 +41,7 @@ tokenStore.subscribe(value => {
     window.localStorage.setItem('account.token', String(value))
 })
 
-export const getToken = () => get(tokenStore)
+export const getToken = (): null | string => get(tokenStore)
 
 /**
  * @description
@@ -52,4 +54,4 @@ dataStore.subscribe(value => {
     window.localStorage.setItem('account.data', String(value))
 })
 
-export const getData = () => get(dataStore)
+export const getData = (): null | string => get(dataStore)
