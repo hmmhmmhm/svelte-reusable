@@ -62,13 +62,13 @@ export class RestAPI {
     globalProcess: IGlobalProcess
     postprocess?: PostprocessType
     isUseAuth: boolean
-    getToken: () => string
+    getToken: () => string | null
     faultTolerance?: (error: Error) => void
 
     constructor(params: {
         address: string
         isUseAuth: boolean
-        getToken: () => string
+        getToken: () => string | null
         faultTolerance?: (error: Error) => void
         globalProcess?: IGlobalProcess
         preprocess?: PreprocessType
@@ -302,7 +302,7 @@ export class RestAPI {
 
         let processHeader = {}
 
-        if(token != undefined && token != null){
+        if (typeof token == 'string' && token.length > 0) {
             processHeader = {
                 ...processHeader,
 
