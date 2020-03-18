@@ -12,12 +12,12 @@ import { RestAPI } from './restapi'
 import { Router } from './router'
 import { GridHelper } from './grid'
 import * as Page from './page'
+import * as VirtualFileInput from './virtualFileInput'
 
 export {
     Svelte,
     Store,
     Transition,
-
     Account,
     SPA,
     Cookie,
@@ -27,4 +27,5 @@ export {
     Router,
     GridHelper,
     Page,
+    VirtualFileInput,
 }
